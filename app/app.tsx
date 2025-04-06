@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Header } from "./header";
 import { Keypad } from "./keypad";
 import { Output } from "./output";
+import { OnboardingModal } from "./onboarding-modal";
 
 type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
 
@@ -12,6 +13,7 @@ const TRY_LIMIT = 3;
 
 export default function App() {
   const currentGame = { history: [] };
+  const [displayOnboarding, setDisplayOnboarding] = useState(true);
   const [tryLeft, setTryLeft] = useState(
     TRY_LIMIT - currentGame.history.length
   );
@@ -26,6 +28,14 @@ export default function App() {
   const hasWon = inputStatus.every((status) => status === "valid");
   const hasNoTryLeft = tryLeft <= 0;
   const isGameOver = hasNoTryLeft || hasWon;
+
+  const handleHelp = () => {
+    setDisplayOnboarding(true);
+  };
+
+  const handleCloseOnboarding = () => {
+    setDisplayOnboarding(false);
+  };
 
   const handleNumberInput = (number: number) => {
     if (input.length >= NUMBER_LENGTH) return;
@@ -73,7 +83,7 @@ export default function App() {
 
   return (
     <main className="flex flex-col items-center justify-center px-4 gap-8">
-      <Header />
+      <Header onHelp={handleHelp} />
       <Output input={input} lastInputStatus={inputStatus} />
       <Keypad
         onNumberInput={handleNumberInput}
@@ -82,6 +92,10 @@ export default function App() {
         submitDisabled={input.length === 0}
         eraseDisabled={input.length < NUMBER_LENGTH}
         disabled={isGameOver}
+      />
+      <OnboardingModal
+        show={displayOnboarding}
+        onClose={handleCloseOnboarding}
       />
     </main>
   );

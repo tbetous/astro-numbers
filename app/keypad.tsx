@@ -1,3 +1,4 @@
+import { Button } from "./button";
 import { CheckSolid, DeleteLeftSolid } from "./icons";
 
 type KeypadProps = {
@@ -17,19 +18,9 @@ type KeypadButtonProps = {
 
 const KeypadButton = ({ onClick, disabled, children }: KeypadButtonProps) => {
   return (
-    <button
-      className="
-        h-12 w-12 flex justify-center items-center text-primary border-1 border-primary rounded-md cursor-pointer transition-all duration-150
-        hover:shadow-aura shadow-primary/50 
-        focus:outline-none focus:ring-2 focus:ring-primary hover:text-space hover:bg-primary 
-        active:scale-90 
-        disabled:cursor-not-allowed disabled:border-disabled disabled:text-disabled disabled:bg-space disabled:shadow-none disabled:scale-100
-        "
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <Button className="h-12 w-12" onClick={onClick} disabled={disabled}>
       {children}
-    </button>
+    </Button>
   );
 };
 
