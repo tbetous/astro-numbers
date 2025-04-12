@@ -1,25 +1,53 @@
 import { useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
 
 import { Header } from "./header";
 import { Keypad } from "./keypad";
 import { Output } from "./output";
 import { OnboardingModal } from "./onboarding-modal";
+import { GameOverModal } from "./game-over-modal";
 
 type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
+
+type Configuration = {
+  onboarding: boolean;
+};
+
+type CurrentGame = {
+  history: InputStatus[][];
+};
 
 const ANSWER = [1, 2, 1, 2, 1];
 const NUMBER_LENGTH = ANSWER.length;
 const TRY_LIMIT = 3;
 
 export default function App() {
-  const currentGame = { history: [] };
-  const [displayOnboarding, setDisplayOnboarding] = useState(true);
+  const [configuration, setConfiguration] = useLocalStorage<Configuration>(
+    "configuration",
+    {
+      onboarding: true,
+    }
+  );
+
+  const [currentGame, setCurrentGame] = useLocalStorage<CurrentGame>(
+    "currentGame",
+    {
+      history: [],
+    }
+  );
+  // const [currentGame, setCurrentGame] = useState<CurrentGame>({ history: [] });
+  const [displayOnboarding, setDisplayOnboarding] = useState(
+    configuration && configuration.onboarding
+  );
+  const [displayGameOver, setDisplayGameOver] = useState(false);
   const [tryLeft, setTryLeft] = useState(
     TRY_LIMIT - currentGame.history.length
   );
   const [input, setInput] = useState<number[]>([]);
   const [inputStatus, setInputStatus] = useState<InputStatus[]>(
-    currentGame.history[0] || Array(NUMBER_LENGTH).fill("unknown")
+    (currentGame.history.length &&
+      currentGame.history[currentGame.history.length - 1]) ||
+      Array(NUMBER_LENGTH).fill("unknown")
   );
   const [historyStatus, setHistoryStatus] = useState<InputStatus[][]>(
     currentGame.history
@@ -34,6 +62,10 @@ export default function App() {
   };
 
   const handleCloseOnboarding = () => {
+    setConfiguration((configuration) => ({
+      ...configuration,
+      onboarding: false,
+    }));
     setDisplayOnboarding(false);
   };
 
@@ -76,9 +108,9 @@ export default function App() {
     setInput([]);
     setInputStatus(newOutputStatus);
     setHistoryStatus((history) => [...history, newOutputStatus]);
-    // setCurrentGame({
-    //   history: [...historyStatus, newOutputStatus],
-    // });
+    setCurrentGame({
+      history: [...historyStatus, newOutputStatus],
+    });
   };
 
   return (
@@ -96,6 +128,11 @@ export default function App() {
       <OnboardingModal
         show={displayOnboarding}
         onClose={handleCloseOnboarding}
+      />
+      <GameOverModal
+        won={hasWon}
+        historyInputStatus={historyStatus}
+        show={isGameOver}
       />
     </main>
   );

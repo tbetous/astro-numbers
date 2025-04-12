@@ -37,6 +37,7 @@ export const Keypad = ({
       <div className="flex gap-4">
         {[7, 8, 9].map((value) => (
           <KeypadButton
+            key={value}
             onClick={() => onNumberInput(value)}
             disabled={disabled}
           >
@@ -47,6 +48,7 @@ export const Keypad = ({
       <div className="flex gap-4">
         {[4, 5, 6].map((value) => (
           <KeypadButton
+            key={value}
             onClick={() => onNumberInput(value)}
             disabled={disabled}
           >
@@ -57,6 +59,7 @@ export const Keypad = ({
       <div className="flex gap-4">
         {[1, 2, 3].map((value) => (
           <KeypadButton
+            key={value}
             onClick={() => onNumberInput(value)}
             disabled={disabled}
           >
