@@ -9,6 +9,8 @@
   --color-valid: #3bb273;
   --color-missplaced: #e3b505;
   --color-useless: #db504a;
+  --color-left: #14bdeb;
+  --color-unleft: #db504a;
   --shadow-aura: 0 0 4px 2px;
   --shadow-aura-brighter: 0 0 10px 4px;
 }

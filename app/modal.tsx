@@ -40,7 +40,7 @@ export const Modal = ({ title, show, onClose, children }: ModalProps) => {
                 <XmarkSolid className="h-6 w-6" />
               </Button>
             </div>
-            <div className="dialog-content">{children}</div>
+            <div className="text-white">{children}</div>
           </div>
         </div>
       </div>

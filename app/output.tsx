@@ -20,7 +20,7 @@ const AstroOutput = ({
 }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-2 text-primary">
-      <div className="h-7 w-7 border-1 border-primary rounded-md flex items-center justify-center">
+      <div className="h-8 w-8 border-1 border-primary rounded-md flex items-center justify-center">
         <span>{displayStar ? <Star /> : ""}</span>
       </div>
       <div

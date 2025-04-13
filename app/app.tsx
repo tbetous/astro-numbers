@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 
+import { generateDailyAnswer } from "./utils/generate-daily-answer";
 import { Header } from "./header";
 import { Keypad } from "./keypad";
 import { Output } from "./output";
 import { OnboardingModal } from "./onboarding-modal";
 import { GameOverModal } from "./game-over-modal";
+import { StatsModal } from "./stats-modal";
+import { TryCount } from "./tryCount";
 
 type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
 
@@ -17,11 +20,11 @@ type CurrentGame = {
   history: InputStatus[][];
 };
 
-const ANSWER = [1, 2, 1, 2, 1];
-const NUMBER_LENGTH = ANSWER.length;
-const TRY_LIMIT = 3;
+const NUMBER_LENGTH = 5; // Adjusted to match the length of the answer
+const TRY_LIMIT = 10;
 
 export default function App() {
+  const answer = generateDailyAnswer(NUMBER_LENGTH);
   const [configuration, setConfiguration] = useLocalStorage<Configuration>(
     "configuration",
     {
@@ -39,7 +42,7 @@ export default function App() {
   const [displayOnboarding, setDisplayOnboarding] = useState(
     configuration && configuration.onboarding
   );
-  const [displayGameOver, setDisplayGameOver] = useState(false);
+  const [displayStats, setDisplayStats] = useState(false);
   const [tryLeft, setTryLeft] = useState(
     TRY_LIMIT - currentGame.history.length
   );
@@ -57,8 +60,12 @@ export default function App() {
   const hasNoTryLeft = tryLeft <= 0;
   const isGameOver = hasNoTryLeft || hasWon;
 
-  const handleHelp = () => {
+  const handleShowHelp = () => {
     setDisplayOnboarding(true);
+  };
+
+  const handleShowStats = () => {
+    setDisplayStats(true);
   };
 
   const handleCloseOnboarding = () => {
@@ -87,7 +94,7 @@ export default function App() {
 
     setTryLeft((count) => count - 1);
 
-    const answerNumberCountMap = ANSWER.reduce(
+    const answerNumberCountMap = answer.reduce(
       (acc: { [key: number]: number }, value: number) => {
         if (!acc[value]) acc[value] = 0;
         acc[value] += 1;
@@ -101,7 +108,7 @@ export default function App() {
 
       answerNumberCountMap[number] -= 1;
 
-      if (ANSWER[index] === number) return "valid";
+      if (answer[index] === number) return "valid";
       return "missplaced";
     });
 
@@ -114,8 +121,9 @@ export default function App() {
   };
 
   return (
-    <main className="flex flex-col items-center justify-center px-4 gap-8">
-      <Header onHelp={handleHelp} />
+    <main className="flex flex-col items-center justify-center px-4 gap-6">
+      <Header onShowHelp={handleShowHelp} onShowStats={handleShowStats} />
+      <TryCount tryLeft={tryLeft} tryTotal={TRY_LIMIT} />
       <Output input={input} lastInputStatus={inputStatus} />
       <Keypad
         onNumberInput={handleNumberInput}
@@ -134,6 +142,7 @@ export default function App() {
         historyInputStatus={historyStatus}
         show={isGameOver}
       />
+      <StatsModal show={displayStats} onClose={() => setDisplayStats(false)} />
     </main>
   );
 }

@@ -6,6 +6,7 @@ export type GameOverModalProps = {
   show: boolean;
   won: boolean;
   historyInputStatus: InputStatus[][];
+  onClose?: () => void;
 };
 
 const InputStatusEmoji = ({ inputStatus }: { inputStatus: InputStatus }) => {
@@ -21,8 +22,8 @@ const InputStatusEmoji = ({ inputStatus }: { inputStatus: InputStatus }) => {
 
 const AttemptRaw = ({ attempt }: { attempt: InputStatus[] }) => (
   <span>
-    {attempt.map((inputStatus) => (
-      <InputStatusEmoji inputStatus={inputStatus} />
+    {attempt.map((inputStatus, index) => (
+      <InputStatusEmoji key={index} inputStatus={inputStatus} />
     ))}
   </span>
 );
@@ -38,8 +39,8 @@ export const GameOverModal = ({
       This the end of the game! Come back tomorrow.
       <h3>Your history</h3>
       <ul>
-        {historyInputStatus.map((attempt) => (
-          <li>
+        {historyInputStatus.map((attempt, index) => (
+          <li key={index}>
             <AttemptRaw attempt={attempt} />
           </li>
         ))}
