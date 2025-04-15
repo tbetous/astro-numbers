@@ -16,15 +16,30 @@ type Configuration = {
   onboarding: boolean;
 };
 
-type CurrentGame = {
+type GameState = {
   history: InputStatus[][];
+  lastPlayedDate: string;
 };
 
 const NUMBER_LENGTH = 5; // Adjusted to match the length of the answer
 const TRY_LIMIT = 10;
 
+const getDate = () => {
+  const today = new Date();
+  return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+};
+
 export default function App() {
+  const today = getDate();
   const answer = generateDailyAnswer(NUMBER_LENGTH);
+
+  const [gameState, setGameState] = useLocalStorage<GameState>("gameState", {
+    history: [],
+    lastPlayedDate: today,
+  });
+
+  const isNewDay = gameState.lastPlayedDate !== today;
+
   const [configuration, setConfiguration] = useLocalStorage<Configuration>(
     "configuration",
     {
@@ -32,28 +47,19 @@ export default function App() {
     }
   );
 
-  const [currentGame, setCurrentGame] = useLocalStorage<CurrentGame>(
-    "currentGame",
-    {
-      history: [],
-    }
+  const [historyStatus, setHistoryStatus] = useState<InputStatus[][]>(
+    isNewDay ? [] : gameState.history
   );
-  // const [currentGame, setCurrentGame] = useState<CurrentGame>({ history: [] });
+
   const [displayOnboarding, setDisplayOnboarding] = useState(
     configuration && configuration.onboarding
   );
   const [displayStats, setDisplayStats] = useState(false);
-  const [tryLeft, setTryLeft] = useState(
-    TRY_LIMIT - currentGame.history.length
-  );
+  const [tryLeft, setTryLeft] = useState(TRY_LIMIT - historyStatus.length);
   const [input, setInput] = useState<number[]>([]);
   const [inputStatus, setInputStatus] = useState<InputStatus[]>(
-    (currentGame.history.length &&
-      currentGame.history[currentGame.history.length - 1]) ||
+    (historyStatus.length && historyStatus[historyStatus.length - 1]) ||
       Array(NUMBER_LENGTH).fill("unknown")
-  );
-  const [historyStatus, setHistoryStatus] = useState<InputStatus[][]>(
-    currentGame.history
   );
 
   const hasWon = inputStatus.every((status) => status === "valid");
@@ -88,6 +94,14 @@ export default function App() {
     setInput((input) => input.slice(0, input.length - 1));
   };
 
+  // Update game state when the history changes
+  const updateGameState = (newHistory: InputStatus[][]) => {
+    setGameState({
+      history: newHistory,
+      lastPlayedDate: today,
+    });
+  };
+
   const handleSubmit = () => {
     if (input.length !== NUMBER_LENGTH) return;
     if (tryLeft <= 0) return;
@@ -114,10 +128,9 @@ export default function App() {
 
     setInput([]);
     setInputStatus(newOutputStatus);
-    setHistoryStatus((history) => [...history, newOutputStatus]);
-    setCurrentGame({
-      history: [...historyStatus, newOutputStatus],
-    });
+    const newHistory = [...historyStatus, newOutputStatus];
+    setHistoryStatus(newHistory);
+    updateGameState(newHistory);
   };
 
   return (
