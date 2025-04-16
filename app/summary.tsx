@@ -60,9 +60,9 @@ export const Summary = ({ historyInputStatus, tryLimit }: SummaryProps) => {
   };
 
   return (
-    <>
-      <div className="flex flex-row items-center gap-2 flex-wrap">
-        <h3 className="text-xl">Summary of current game</h3>
+    <div className="flex flex-col gap-2 p-2 border-primary border-1 rounded full">
+      <div className="flex flex-row pb-2 border-b-1 border-primary items-center gap-2 flex-wrap">
+        <h3 className="text-lg">Summary of the game</h3>
         <Button onClick={handleShareClick}>
           <div className="flex flex-row items-center gap-1 px-1 py-0.5">
             <CloneSolid className="h-3 w-3" />
@@ -82,6 +82,6 @@ export const Summary = ({ historyInputStatus, tryLimit }: SummaryProps) => {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 };

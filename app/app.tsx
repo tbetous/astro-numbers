@@ -220,7 +220,12 @@ export default function App() {
         answer={answer}
         tryLimit={TRY_LIMIT}
       />
-      <StatsModal show={displayStats} onClose={() => setDisplayStats(false)} />
+      <StatsModal
+        show={displayStats}
+        historyInputStatus={historyStatus}
+        tryLimit={TRY_LIMIT}
+        onClose={() => setDisplayStats(false)}
+      />
     </main>
   );
 }
