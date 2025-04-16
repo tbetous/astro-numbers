@@ -21,12 +21,38 @@ type GameState = {
   lastPlayedDate: string;
 };
 
+type GameStats = {
+  lastPlayedDate: string;
+  gamesPlayed: number;
+  gamesWon: number;
+  attemptsDistribution: { [key: number]: number }; // e.g., {1: 0, 2: 0, ..., 10: 0}
+  inputStatusDistribution: Record<Exclude<InputStatus, "unknown">, number>; // e.g., {valid: 0, missplaced: 0, useless: 0}
+};
+
 const NUMBER_LENGTH = 5; // Adjusted to match the length of the answer
 const TRY_LIMIT = 10;
 
 const getDate = () => {
   const today = new Date();
   return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+};
+
+const INITIAL_STATS: GameStats = {
+  lastPlayedDate: "",
+  gamesPlayed: 0,
+  gamesWon: 0,
+  attemptsDistribution: Array.from(
+    { length: TRY_LIMIT },
+    (_, i) => i + 1
+  ).reduce((acc, attempt) => {
+    acc[attempt] = 0;
+    return acc;
+  }, {} as { [key: number]: number }),
+  inputStatusDistribution: {
+    valid: 0,
+    missplaced: 0,
+    useless: 0,
+  },
 };
 
 export default function App() {
@@ -37,6 +63,11 @@ export default function App() {
     history: [],
     lastPlayedDate: today,
   });
+
+  const [gameStats, setGameStats] = useLocalStorage<GameStats>(
+    "gameStats",
+    INITIAL_STATS
+  );
 
   const isNewDay = gameState.lastPlayedDate !== today;
 
@@ -66,6 +97,39 @@ export default function App() {
   const hasNoTryLeft = tryLeft <= 0;
   const isGameOver = hasNoTryLeft || hasWon;
 
+  const updateGameStats = () => {
+    setGameStats((prevStats) => {
+      const attemptsUsed = TRY_LIMIT - tryLeft;
+      const updatedStats = { ...prevStats };
+
+      updatedStats.gamesPlayed += 1;
+      if (hasWon) {
+        updatedStats.gamesWon += 1;
+        updatedStats.attemptsDistribution[attemptsUsed] += 1;
+      }
+
+      updatedStats.inputStatusDistribution = historyStatus.reduce(
+        (acc, status) => {
+          status.forEach((s) => {
+            if (s !== "unknown") {
+              acc[s] = (acc[s] || 0) + 1;
+            }
+          });
+          return acc;
+        },
+        { ...prevStats.inputStatusDistribution }
+      );
+
+      updatedStats.lastPlayedDate = today;
+
+      return updatedStats;
+    });
+  };
+
+  if (isGameOver && today !== gameStats.lastPlayedDate) {
+    updateGameStats();
+  }
+
   const handleShowHelp = () => {
     setDisplayOnboarding(true);
   };
@@ -94,7 +158,6 @@ export default function App() {
     setInput((input) => input.slice(0, input.length - 1));
   };
 
-  // Update game state when the history changes
   const updateGameState = (newHistory: InputStatus[][]) => {
     setGameState({
       history: newHistory,
@@ -154,6 +217,8 @@ export default function App() {
         won={hasWon}
         historyInputStatus={historyStatus}
         show={isGameOver}
+        answer={answer}
+        tryLimit={TRY_LIMIT}
       />
       <StatsModal show={displayStats} onClose={() => setDisplayStats(false)} />
     </main>

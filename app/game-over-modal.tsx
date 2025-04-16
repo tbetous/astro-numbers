@@ -1,10 +1,13 @@
 import { Modal } from "./modal";
+import { Summary } from "./summary";
 
 type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
 
 export type GameOverModalProps = {
   show: boolean;
   won: boolean;
+  answer: number[];
+  tryLimit: number;
   historyInputStatus: InputStatus[][];
   onClose?: () => void;
 };
@@ -30,21 +33,25 @@ const AttemptRaw = ({ attempt }: { attempt: InputStatus[] }) => (
 
 export const GameOverModal = ({
   won,
+  answer,
+  tryLimit,
   historyInputStatus,
   show,
 }: GameOverModalProps) => {
   const title = won ? "Success" : "Defeat";
+  const closing = won
+    ? "Congratulations! Come back tomorrow for a new puzzle."
+    : "Better luck next time! Maybe you will find it tomorrow?";
   return (
     <Modal title={title} show={show}>
-      This the end of the game! Come back tomorrow.
-      <h3>Your history</h3>
-      <ul>
-        {historyInputStatus.map((attempt, index) => (
-          <li key={index}>
-            <AttemptRaw attempt={attempt} />
-          </li>
-        ))}
-      </ul>
+      <div className="flex flex-col items-left gap-4">
+        <p>
+          The answer was :{" "}
+          <span className="text-primary">{answer.join("")}</span>
+        </p>
+        <p>{closing}</p>
+        <Summary historyInputStatus={historyInputStatus} tryLimit={tryLimit} />
+      </div>
     </Modal>
   );
 };
