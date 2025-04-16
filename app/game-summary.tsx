@@ -1,4 +1,3 @@
-import React from "react";
 import { Button } from "./button";
 import { CloneSolid } from "./icons";
 
@@ -32,7 +31,7 @@ const AttemptRaw = ({ attempt }: { attempt: InputStatus[] }) => (
   </span>
 );
 
-const summaryAsText = (
+const gameSummaryAsText = (
   historyInputStatus: InputStatus[][],
   tryLimit: number
 ) => {
@@ -54,9 +53,11 @@ ${historyInputStatus
   return summary;
 };
 
-export const Summary = ({ historyInputStatus, tryLimit }: SummaryProps) => {
+export const GameSummary = ({ historyInputStatus, tryLimit }: SummaryProps) => {
   const handleShareClick = () => {
-    navigator.clipboard.writeText(summaryAsText(historyInputStatus, tryLimit));
+    navigator.clipboard.writeText(
+      gameSummaryAsText(historyInputStatus, tryLimit)
+    );
   };
 
   return (

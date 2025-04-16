@@ -224,6 +224,7 @@ export default function App() {
         show={displayStats}
         historyInputStatus={historyStatus}
         tryLimit={TRY_LIMIT}
+        gameStats={gameStats}
         onClose={() => setDisplayStats(false)}
       />
     </main>

@@ -1,5 +1,5 @@
 import { Modal } from "./modal";
-import { Summary } from "./summary";
+import { GameSummary } from "./game-summary";
 
 type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
 
@@ -50,7 +50,10 @@ export const GameOverModal = ({
           <span className="text-primary">{answer.join("")}</span>
         </p>
         <p>{closing}</p>
-        <Summary historyInputStatus={historyInputStatus} tryLimit={tryLimit} />
+        <GameSummary
+          historyInputStatus={historyInputStatus}
+          tryLimit={tryLimit}
+        />
       </div>
     </Modal>
   );

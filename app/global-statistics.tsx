@@ -1,0 +1,124 @@
+import { Button } from "./button";
+import { CloneSolid } from "./icons";
+
+type GameStats = {
+  gamesPlayed: number;
+  gamesWon: number;
+  attemptsDistribution: { [key: number]: number }; // e.g., {1: 0, 2: 0, ..., 10: 0}
+  //   inputStatusDistribution: Record<Exclude<InputStatus, "unknown">, number>; // e.g., {valid: 0, missplaced: 0, useless: 0}
+};
+
+const computeAverageAttempts = (
+  attemptsDistribution: { [key: number]: number },
+  gamesPlayed: number
+) => {
+  const totalAttempts = Object.keys(attemptsDistribution).reduce((acc, key) => {
+    return acc + parseInt(key, 10) * attemptsDistribution[Number(key)];
+  }, 0);
+  return (totalAttempts / gamesPlayed).toFixed(2);
+};
+
+const computeWinRate = (gamesPlayed: number, gamesWon: number): string => {
+  return ((gamesWon / gamesPlayed) * 100).toFixed(2);
+};
+
+const Metrics = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number;
+}) => {
+  return (
+    <div className="flex flex-col items-center justify-center h-full p-2 border-1 border-primary rounded">
+      <p className="text-sm text-primary text-center">{label}</p>
+      <p className="text-md font-bold">{value}</p>
+    </div>
+  );
+};
+
+const Bar = ({ value, maxValue }: { value: number; maxValue: number }) => {
+  const percentage = (value / maxValue) * 100;
+  return (
+    <div className="relative w-full rounded-md h-4 bg-space-light">
+      <div
+        className="bg-primary h-4 rounded-md"
+        style={{ width: `${percentage}%` }}
+      ></div>
+      <span className="absolute text-space text-xs top-0 start-2">{value}</span>
+    </div>
+  );
+};
+
+export const GlobalStatistics = ({
+  gamesPlayed,
+  gamesWon,
+  attemptsDistribution,
+}: GameStats) => {
+  const handleShareClick = () => {
+    const summary = `✨Astro Numbers - Global Statistics✨
+
+🎮 Total Games Played: ${gamesPlayed}
+🏆 Total Wins: ${gamesWon}
+📊 Win Rate: ${computeWinRate(gamesPlayed, gamesWon)}%
+📝 Average Attempts: ${computeAverageAttempts(
+      attemptsDistribution,
+      gamesPlayed
+    )}`;
+    navigator.clipboard.writeText(summary);
+  };
+
+  const maxAttempts = Object.values(attemptsDistribution).reduce(
+    (max, count) => Math.max(max, count),
+    0
+  );
+
+  console.log(maxAttempts);
+
+  return (
+    <div className="flex flex-col gap-2 p-2 border-primary border-1 rounded full">
+      <div className="flex flex-row pb-2 border-b-1 border-primary items-center gap-2 flex-wrap">
+        <h3 className="text-lg">Global Statistics</h3>
+        <Button onClick={handleShareClick}>
+          <div className="flex flex-row items-center gap-1 px-1 py-0.5">
+            <CloneSolid className="h-3 w-3" />
+            <span className="text-sm">Share</span>
+          </div>
+        </Button>
+      </div>
+      <div>
+        <div className="flex flex-row gap-2 items-stretch">
+          <div className="w-1/3">
+            <Metrics
+              label="Total wins"
+              value={`${gamesWon} / ${gamesPlayed}`}
+            />
+          </div>
+          <div className="w-1/3">
+            <Metrics
+              label="Win Rate"
+              value={`${computeWinRate(gamesPlayed, gamesWon)}%`}
+            />
+          </div>
+          <div className="w-1/3">
+            <Metrics
+              label="Avg. Attempts"
+              value={computeAverageAttempts(attemptsDistribution, gamesPlayed)}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <h4 className="text-md">Attempts Distribution</h4>
+        <div className="grid grid-cols-2 items-center grid-cols-[1fr_93%] gap-0.5">
+          {Object.entries(attemptsDistribution).map(([attempt, count]) => (
+            <>
+              <span className="text-xs">{attempt}</span>
+              <Bar value={count} maxValue={maxAttempts} />
+            </>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
