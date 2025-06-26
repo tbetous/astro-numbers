@@ -1,6 +1,5 @@
 import { Star } from "./icons";
-
-type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
+import type { InputStatus } from "./types";
 
 type OutputProps = {
   input: number[];

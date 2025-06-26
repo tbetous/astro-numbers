@@ -1,6 +1,7 @@
 import { Modal } from "./modal";
 import { GameSummary } from "./game-summary";
 import { GlobalStatistics } from "./global-statistics";
+import type { InputStatus } from "./types";
 
 type GameStats = {
   lastPlayedDate: string;
@@ -8,8 +9,6 @@ type GameStats = {
   gamesWon: number;
   attemptsDistribution: { [key: number]: number }; // e.g., {1: 0, 2: 0, ..., 10: 0}
 };
-
-type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
 
 export type GameOverModalProps = {
   show: boolean;

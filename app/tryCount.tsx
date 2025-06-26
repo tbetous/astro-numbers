@@ -1,8 +1,6 @@
 import { Star } from "./icons";
 
-type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
-
-type OutputProps = {
+type TryCountProps = {
   tryLeft: number;
   tryTotal: number;
 };

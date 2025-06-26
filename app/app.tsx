@@ -9,8 +9,7 @@ import { OnboardingModal } from "./onboarding-modal";
 import { GameOverModal } from "./game-over-modal";
 import { StatsModal } from "./stats-modal";
 import { TryCount } from "./tryCount";
-
-type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
+import type { InputStatus } from "./types";
 
 type Configuration = {
   onboarding: boolean;

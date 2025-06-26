@@ -1,7 +1,6 @@
 import { Button } from "./button";
 import { CloneSolid } from "./icons";
-
-type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
+import type { InputStatus } from "./types";
 
 export type SummaryProps = {
   historyInputStatus: InputStatus[][];

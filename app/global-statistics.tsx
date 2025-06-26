@@ -37,19 +37,6 @@ const Metrics = ({
   );
 };
 
-const Bar = ({ value, maxValue }: { value: number; maxValue: number }) => {
-  const percentage = (value / maxValue) * 100;
-  return (
-    <div className="relative w-full rounded-md h-4 bg-space-light">
-      <div
-        className="bg-primary h-4 rounded-md"
-        style={{ width: `${percentage}%` }}
-      ></div>
-      <span className="absolute text-space text-xs top-0 start-2">{value}</span>
-    </div>
-  );
-};
-
 export const GlobalStatistics = ({
   gamesPlayed,
   gamesWon,
@@ -106,17 +93,6 @@ export const GlobalStatistics = ({
               value={computeAverageAttempts(attemptsDistribution, gamesPlayed)}
             />
           </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-2">
-        <h4 className="text-md">Attempts Distribution</h4>
-        <div className="grid grid-cols-2 items-center grid-cols-[1fr_93%] gap-0.5">
-          {Object.entries(attemptsDistribution).map(([attempt, count]) => (
-            <>
-              <span className="text-xs">{attempt}</span>
-              <Bar value={count} maxValue={maxAttempts} />
-            </>
-          ))}
         </div>
       </div>
     </div>

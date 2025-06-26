@@ -1,7 +1,6 @@
 import { Modal } from "./modal";
 import { GameSummary } from "./game-summary";
-
-type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
+import type { InputStatus } from "./types";
 
 export type GameOverModalProps = {
   show: boolean;
