@@ -12,7 +12,7 @@ export const Header = ({ onShowHelp, onShowStats }: HeaderProps) => (
     <Button onClick={onShowHelp} className="h-6 w-6">
       <CircleQuestionSolid className="h-4 w-4" />
     </Button>
-    <h1 className="text-xl font-bold text-center">Astro chiffres</h1>
+    <h1 className="text-xl font-bold text-center">Astro numbers</h1>
     <Button onClick={onShowStats} className="h-6 w-6 justify-self-end">
       <ChartSimpleSolid className="h-4 w-4" />
     </Button>

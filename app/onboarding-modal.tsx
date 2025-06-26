@@ -30,20 +30,22 @@ export const OnboardingModal = ({ onClose, show }: OnboardingModalProps) => {
             <div className="flex items-center gap-2">
               <span>🟩</span>
               <span>
-                <strong>Green/Valid:</strong> Correct digit in correct position
+                <span className="font-bold">Green/Valid:</span> Correct digit in
+                correct position
               </span>
             </div>
             <div className="flex items-center gap-2">
               <span>🟨</span>
               <span>
-                <strong>Yellow/Misplaced:</strong> Correct digit but wrong
-                position
+                <span className="font-bold">Yellow/Misplaced:</span> Correct
+                digit but wrong position
               </span>
             </div>
             <div className="flex items-center gap-2">
               <span>🟥</span>
               <span>
-                <strong>Red/Useless:</strong> Digit not in the answer at all
+                <span className="font-bold">Red/Useless:</span> Digit not in the
+                answer at all
               </span>
             </div>
           </div>

@@ -12,6 +12,7 @@ const computeAverageAttempts = (
   attemptsDistribution: { [key: number]: number },
   gamesPlayed: number
 ) => {
+  if (gamesPlayed === 0) return "0.00";
   const totalAttempts = Object.keys(attemptsDistribution).reduce((acc, key) => {
     return acc + parseInt(key, 10) * attemptsDistribution[Number(key)];
   }, 0);
@@ -19,6 +20,7 @@ const computeAverageAttempts = (
 };
 
 const computeWinRate = (gamesPlayed: number, gamesWon: number): string => {
+  if (gamesPlayed === 0) return "0.00";
   return ((gamesWon / gamesPlayed) * 100).toFixed(2);
 };
 
