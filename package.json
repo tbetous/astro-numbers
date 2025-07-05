@@ -45,11 +45,13 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "prettier --write",
-      "eslint --fix",
-      "react-router typegen && tsc --noEmit"
+      "eslint --fix"
     ],
     "*.{json,md,css}": [
       "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "bash -c 'npm run typecheck'"
     ]
   }
 }
