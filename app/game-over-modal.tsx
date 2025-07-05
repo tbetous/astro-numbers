@@ -1,34 +1,15 @@
-import { Modal } from "./modal";
-import { GameSummary } from "./game-summary";
-import type { InputStatus } from "./types";
+import { Modal } from "./modal"
+import { GameSummary } from "./game-summary"
+import type { InputStatus } from "./types"
 
 export type GameOverModalProps = {
-  show: boolean;
-  won: boolean;
-  answer: number[];
-  tryLimit: number;
-  historyInputStatus: InputStatus[][];
-  onClose?: () => void;
-};
-
-const InputStatusEmoji = ({ inputStatus }: { inputStatus: InputStatus }) => {
-  switch (inputStatus) {
-    case "valid":
-      return <span>🟩</span>;
-    case "missplaced":
-      return <span>🟨</span>;
-    default:
-      return <span>🟥</span>;
-  }
-};
-
-const AttemptRaw = ({ attempt }: { attempt: InputStatus[] }) => (
-  <span>
-    {attempt.map((inputStatus, index) => (
-      <InputStatusEmoji key={index} inputStatus={inputStatus} />
-    ))}
-  </span>
-);
+  show: boolean
+  won: boolean
+  answer: number[]
+  tryLimit: number
+  historyInputStatus: InputStatus[][]
+  onClose?: () => void
+}
 
 export const GameOverModal = ({
   won,
@@ -37,10 +18,10 @@ export const GameOverModal = ({
   historyInputStatus,
   show,
 }: GameOverModalProps) => {
-  const title = won ? "Success" : "Defeat";
+  const title = won ? "Success" : "Defeat"
   const closing = won
     ? "Congratulations! Come back tomorrow for a new puzzle."
-    : "Better luck next time! Maybe you will find it tomorrow?";
+    : "Better luck next time! Maybe you will find it tomorrow?"
   return (
     <Modal title={title} show={show}>
       <div className="flex flex-col items-left gap-4">
@@ -55,5 +36,5 @@ export const GameOverModal = ({
         />
       </div>
     </Modal>
-  );
-};
+  )
+}

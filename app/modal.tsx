@@ -1,29 +1,29 @@
-import { type ReactNode, useEffect, useRef } from "react";
-import { Button } from "./button";
-import { XmarkSolid } from "./icons";
+import { type ReactNode, useEffect, useRef, useCallback } from "react"
+import { Button } from "./button"
+import { XmarkSolid } from "./icons"
 
 type ModalProps = {
-  title: string;
-  show: boolean;
-  onClose?: () => void;
-  children: ReactNode;
-};
+  title: string
+  show: boolean
+  onClose?: () => void
+  children: ReactNode
+}
 
 export const Modal = ({ title, show, onClose, children }: ModalProps) => {
-  const ref = useRef<HTMLDialogElement | null>(null);
+  const ref = useRef<HTMLDialogElement | null>(null)
 
-  const closeModal = () => {
-    ref.current?.close();
-    onClose?.();
-  };
+  const closeModal = useCallback(() => {
+    ref.current?.close()
+    onClose?.()
+  }, [onClose])
 
   useEffect(() => {
     if (show) {
-      ref.current?.showModal();
+      ref.current?.showModal()
     } else {
-      closeModal();
+      closeModal()
     }
-  }, [show]);
+  }, [show, closeModal])
 
   return (
     <dialog ref={ref} onCancel={onClose} className="relative ">
@@ -45,5 +45,5 @@ export const Modal = ({ title, show, onClose, children }: ModalProps) => {
         </div>
       </div>
     </dialog>
-  );
-};
+  )
+}

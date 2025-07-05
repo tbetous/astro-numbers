@@ -1,52 +1,52 @@
-import { Button } from "./button";
-import { CloneSolid } from "./icons";
-import { Toast } from "./toast";
-import { useState } from "react";
+import { Button } from "./button"
+import { CloneSolid } from "./icons"
+import { Toast } from "./toast"
+import { useState } from "react"
 
 type GameStats = {
-  gamesPlayed: number;
-  gamesWon: number;
-  attemptsDistribution: { [key: number]: number }; // e.g., {1: 0, 2: 0, ..., 10: 0}
+  gamesPlayed: number
+  gamesWon: number
+  attemptsDistribution: { [key: number]: number } // e.g., {1: 0, 2: 0, ..., 10: 0}
   //   inputStatusDistribution: Record<Exclude<InputStatus, "unknown">, number>; // e.g., {valid: 0, missplaced: 0, useless: 0}
-};
+}
 
 const computeAverageAttempts = (
   attemptsDistribution: { [key: number]: number },
   gamesPlayed: number
 ) => {
-  if (gamesPlayed === 0) return "0.00";
+  if (gamesPlayed === 0) return "0.00"
   const totalAttempts = Object.keys(attemptsDistribution).reduce((acc, key) => {
-    return acc + parseInt(key, 10) * attemptsDistribution[Number(key)];
-  }, 0);
-  return (totalAttempts / gamesPlayed).toFixed(2);
-};
+    return acc + parseInt(key, 10) * attemptsDistribution[Number(key)]
+  }, 0)
+  return (totalAttempts / gamesPlayed).toFixed(2)
+}
 
 const computeWinRate = (gamesPlayed: number, gamesWon: number): string => {
-  if (gamesPlayed === 0) return "0.00";
-  return ((gamesWon / gamesPlayed) * 100).toFixed(2);
-};
+  if (gamesPlayed === 0) return "0.00"
+  return ((gamesWon / gamesPlayed) * 100).toFixed(2)
+}
 
 const Metrics = ({
   label,
   value,
 }: {
-  label: string;
-  value: string | number;
+  label: string
+  value: string | number
 }) => {
   return (
     <div className="flex flex-col items-center justify-center h-full p-2 border-1 border-primary rounded">
       <p className="text-sm text-primary text-center">{label}</p>
       <p className="text-md font-bold">{value}</p>
     </div>
-  );
-};
+  )
+}
 
 export const GlobalStatistics = ({
   gamesPlayed,
   gamesWon,
   attemptsDistribution,
 }: GameStats) => {
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState(false)
 
   const handleShareClick = () => {
     const summary = `✨Astro Numbers - Global Statistics✨
@@ -57,15 +57,10 @@ export const GlobalStatistics = ({
 📝 Average Attempts: ${computeAverageAttempts(
       attemptsDistribution,
       gamesPlayed
-    )}`;
-    navigator.clipboard.writeText(summary);
-    setShowToast(true);
-  };
-
-  const maxAttempts = Object.values(attemptsDistribution).reduce(
-    (max, count) => Math.max(max, count),
-    0
-  );
+    )}`
+    navigator.clipboard.writeText(summary)
+    setShowToast(true)
+  }
 
   return (
     <>
@@ -111,5 +106,5 @@ export const GlobalStatistics = ({
         onComplete={() => setShowToast(false)}
       />
     </>
-  );
-};
+  )
+}
