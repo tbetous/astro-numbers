@@ -10,6 +10,12 @@ To create a commit, just type:
 /commit
 ```
 
+Or with options:
+
+```
+/commit --no-verify
+```
+
 ## What This Command Does
 
 1. Checks which files are staged with `git status`
