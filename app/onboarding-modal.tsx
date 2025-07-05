@@ -1,9 +1,9 @@
-import { Modal } from "./modal";
+import { Modal } from "./modal"
 
 type OnboardingModalProps = {
-  show: boolean;
-  onClose?: () => void;
-};
+  show: boolean
+  onClose?: () => void
+}
 
 export const OnboardingModal = ({ onClose, show }: OnboardingModalProps) => {
   return (
@@ -52,5 +52,5 @@ export const OnboardingModal = ({ onClose, show }: OnboardingModalProps) => {
         </div>
       </div>
     </Modal>
-  );
-};
+  )
+}

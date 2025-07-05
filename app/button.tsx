@@ -1,7 +1,7 @@
-import type { ReactNode, ButtonHTMLAttributes } from "react";
+import type { ReactNode, ButtonHTMLAttributes } from "react"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const Button = ({ children, className, ...props }: ButtonProps) => (
@@ -18,4 +18,4 @@ export const Button = ({ children, className, ...props }: ButtonProps) => (
   >
     {children}
   </button>
-);
+)

@@ -1,10 +1,10 @@
-import { Star } from "./icons";
-import type { InputStatus } from "./types";
+import { Star } from "./icons"
+import type { InputStatus } from "./types"
 
 type OutputProps = {
-  input: number[];
-  lastInputStatus: InputStatus[];
-};
+  input: number[]
+  lastInputStatus: InputStatus[]
+}
 
 const AstroOutput = ({
   displayStar,
@@ -12,10 +12,10 @@ const AstroOutput = ({
   isUseless,
   isValid,
 }: {
-  displayStar: boolean;
-  isMissplaced: boolean;
-  isUseless: boolean;
-  isValid?: boolean;
+  displayStar: boolean
+  isMissplaced: boolean
+  isUseless: boolean
+  isValid?: boolean
 }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-2 text-primary">
@@ -37,8 +37,8 @@ const AstroOutput = ({
         }
       ></div>
     </div>
-  );
-};
+  )
+}
 
 export const Output = ({ input, lastInputStatus }: OutputProps) => {
   return (
@@ -52,8 +52,8 @@ export const Output = ({ input, lastInputStatus }: OutputProps) => {
             isUseless={lastInputStatus[index] === "useless"}
             isValid={lastInputStatus[index] === "valid"}
           />
-        );
+        )
       })}
     </output>
-  );
-};
+  )
+}

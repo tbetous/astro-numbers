@@ -1,28 +1,28 @@
-import { Button } from "./button";
-import { CheckSolid, DeleteLeftSolid } from "./icons";
+import { Button } from "./button"
+import { CheckSolid, DeleteLeftSolid } from "./icons"
 
 type KeypadProps = {
-  onNumberInput: (n: number) => void;
-  onErase: () => void;
-  onSubmit: () => void;
-  submitDisabled?: boolean;
-  eraseDisabled?: boolean;
-  disabled?: boolean;
-};
+  onNumberInput: (n: number) => void
+  onErase: () => void
+  onSubmit: () => void
+  submitDisabled?: boolean
+  eraseDisabled?: boolean
+  disabled?: boolean
+}
 
 type KeypadButtonProps = {
-  disabled?: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-};
+  disabled?: boolean
+  onClick: () => void
+  children: React.ReactNode
+}
 
 const KeypadButton = ({ onClick, disabled, children }: KeypadButtonProps) => {
   return (
     <Button className="h-12 w-12" onClick={onClick} disabled={disabled}>
       {children}
     </Button>
-  );
-};
+  )
+}
 
 export const Keypad = ({
   onNumberInput,
@@ -79,5 +79,5 @@ export const Keypad = ({
         </KeypadButton>
       </div>
     </div>
-  );
-};
+  )
+}

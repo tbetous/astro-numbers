@@ -1,5 +1,5 @@
-import * as React from "react";
-import type { SVGProps } from "react";
+import * as React from "react"
+import type { SVGProps } from "react"
 const SvgStar = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -11,5 +11,5 @@ const SvgStar = (props: SVGProps<SVGSVGElement>) => (
   >
     <path d="M12 2c.55 0 1 .45 1 1v7.09l6.16-3.56c.48-.28 1.09-.11 1.37.37s.11 1.09-.37 1.37L14 12l6.16 3.73c.48.28.65.89.37 1.37s-.89.65-1.37.37L13 13.91V21c0 .55-.45 1-1 1s-1-.45-1-1v-7.09l-6.16 3.56c-.48.28-1.09.11-1.37-.37s-.11-1.09.37-1.37L10 12 3.84 8.27c-.48-.28-.65-.89-.37-1.37s.89-.65 1.37-.37L11 10.09V3c0-.55.45-1 1-1" />
   </svg>
-);
-export default SvgStar;
+)
+export default SvgStar

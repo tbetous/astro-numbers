@@ -1,1 +1,1 @@
-export type InputStatus = "valid" | "missplaced" | "useless" | "unknown";
+export type InputStatus = "valid" | "missplaced" | "useless" | "unknown"

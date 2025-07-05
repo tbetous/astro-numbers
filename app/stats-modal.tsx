@@ -1,22 +1,22 @@
-import { Modal } from "./modal";
-import { GameSummary } from "./game-summary";
-import { GlobalStatistics } from "./global-statistics";
-import type { InputStatus } from "./types";
+import { Modal } from "./modal"
+import { GameSummary } from "./game-summary"
+import { GlobalStatistics } from "./global-statistics"
+import type { InputStatus } from "./types"
 
 type GameStats = {
-  lastPlayedDate: string;
-  gamesPlayed: number;
-  gamesWon: number;
-  attemptsDistribution: { [key: number]: number }; // e.g., {1: 0, 2: 0, ..., 10: 0}
-};
+  lastPlayedDate: string
+  gamesPlayed: number
+  gamesWon: number
+  attemptsDistribution: { [key: number]: number } // e.g., {1: 0, 2: 0, ..., 10: 0}
+}
 
 export type GameOverModalProps = {
-  show: boolean;
-  onClose?: () => void;
-  tryLimit: number;
-  historyInputStatus: InputStatus[][];
-  gameStats: GameStats;
-};
+  show: boolean
+  onClose?: () => void
+  tryLimit: number
+  historyInputStatus: InputStatus[][]
+  gameStats: GameStats
+}
 
 export const StatsModal = ({
   show,
@@ -39,5 +39,5 @@ export const StatsModal = ({
         />
       </div>
     </Modal>
-  );
-};
+  )
+}

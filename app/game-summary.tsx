@@ -1,28 +1,28 @@
-import { Button } from "./button";
-import { CloneSolid } from "./icons";
-import type { InputStatus } from "./types";
-import { Toast } from "./toast";
-import { useState } from "react";
+import { Button } from "./button"
+import { CloneSolid } from "./icons"
+import type { InputStatus } from "./types"
+import { Toast } from "./toast"
+import { useState } from "react"
 
 export type SummaryProps = {
-  historyInputStatus: InputStatus[][];
-  tryLimit: number;
-};
+  historyInputStatus: InputStatus[][]
+  tryLimit: number
+}
 
 const inputStatusToEmojiText = (inputStatus: InputStatus) => {
   switch (inputStatus) {
     case "valid":
-      return "🟩";
+      return "🟩"
     case "missplaced":
-      return "🟨";
+      return "🟨"
     default:
-      return "🟥";
+      return "🟥"
   }
-};
+}
 
 const InputStatusEmoji = ({ inputStatus }: { inputStatus: InputStatus }) => {
-  return <span>{inputStatusToEmojiText(inputStatus)}</span>;
-};
+  return <span>{inputStatusToEmojiText(inputStatus)}</span>
+}
 
 const AttemptRaw = ({ attempt }: { attempt: InputStatus[] }) => (
   <span>
@@ -30,18 +30,18 @@ const AttemptRaw = ({ attempt }: { attempt: InputStatus[] }) => (
       <InputStatusEmoji key={index} inputStatus={inputStatus} />
     ))}
   </span>
-);
+)
 
 const gameSummaryAsText = (
   historyInputStatus: InputStatus[][],
   tryLimit: number
 ) => {
-  const currentDate = new Date();
+  const currentDate = new Date()
   const formattedDate = currentDate.toLocaleDateString(undefined, {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-  });
+  })
 
   const summary = `✨Astro numbers✨
 
@@ -50,19 +50,19 @@ const gameSummaryAsText = (
 
 ${historyInputStatus
   .map((attempt) => `${attempt.map(inputStatusToEmojiText).join("")}`)
-  .join("\n")}`;
-  return summary;
-};
+  .join("\n")}`
+  return summary
+}
 
 export const GameSummary = ({ historyInputStatus, tryLimit }: SummaryProps) => {
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState(false)
 
   const handleShareClick = () => {
     navigator.clipboard.writeText(
       gameSummaryAsText(historyInputStatus, tryLimit)
-    );
-    setShowToast(true);
-  };
+    )
+    setShowToast(true)
+  }
 
   return (
     <>
@@ -95,5 +95,5 @@ export const GameSummary = ({ historyInputStatus, tryLimit }: SummaryProps) => {
         onComplete={() => setShowToast(false)}
       />
     </>
-  );
-};
+  )
+}
