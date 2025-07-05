@@ -36,7 +36,7 @@ export const Modal = ({ title, show, onClose, children }: ModalProps) => {
           <div className="relative h-full w-full flex flex-col gap-4 transform overflow-hidden rounded-lg bg-space text-left shadow-xl transition-all p-4 sm:my-8 sm:w-full sm:max-w-lg">
             <div className="flex items-center justify-between pb-4 border-b-1 text-primary border-primary">
               <h2 className="text-xl">{title}</h2>
-              <Button onClick={closeModal}>
+              <Button onClick={closeModal} title="Close">
                 <XmarkSolid className="h-6 w-6" />
               </Button>
             </div>
