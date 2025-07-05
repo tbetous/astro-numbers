@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useRef, useCallback } from "react"
+import { type ReactNode, useRef } from "react"
 import { Button } from "./button"
 import { XmarkSolid } from "./icons"
 
@@ -12,18 +12,17 @@ type ModalProps = {
 export const Modal = ({ title, show, onClose, children }: ModalProps) => {
   const ref = useRef<HTMLDialogElement | null>(null)
 
-  const closeModal = useCallback(() => {
+  const closeModal = () => {
     ref.current?.close()
     onClose?.()
-  }, [onClose])
+  }
 
-  useEffect(() => {
-    if (show) {
-      ref.current?.showModal()
-    } else {
-      closeModal()
-    }
-  }, [show, closeModal])
+  // Use the show prop directly to control visibility
+  if (show && ref.current && !ref.current.open) {
+    ref.current.showModal()
+  } else if (!show && ref.current && ref.current.open) {
+    ref.current.close()
+  }
 
   return (
     <dialog ref={ref} onCancel={onClose} className="relative ">

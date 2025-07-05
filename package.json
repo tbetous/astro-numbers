@@ -46,7 +46,7 @@
     "*.{ts,tsx,js,jsx}": [
       "prettier --write",
       "eslint --fix",
-      "tsc --noEmit --skipLibCheck"
+      "react-router typegen && tsc --noEmit"
     ],
     "*.{json,md,css}": [
       "prettier --write"
