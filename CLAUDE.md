@@ -1,4 +1,4 @@
-# Astro number developement guide
+# Astro numbers developement guide
 
 ## What's this project
 

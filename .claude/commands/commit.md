@@ -10,12 +10,6 @@ To create a commit, just type:
 /commit
 ```
 
-Or with options:
-
-```
-/commit --no-verify
-```
-
 ## What This Command Does
 
 1. Checks which files are staged with `git status`
@@ -82,3 +76,7 @@ Example of splitting commits:
 - Sixth commit: fix: resolve linting issues in new code
 - Seventh commit: test: add unit tests for new solc version features
 - Eighth commit: fix: update dependencies with security vulnerabilities)
+
+## Important Notes
+
+- Don't specify this has been done with Claude or any AI
