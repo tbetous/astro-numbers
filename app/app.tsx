@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
+import type { Route } from "./+types/app";
 
 import { generateDailyAnswer } from "./utils/generate-daily-answer";
 import { Header } from "./header";
@@ -27,6 +28,13 @@ type GameStats = {
   attemptsDistribution: { [key: number]: number }; // e.g., {1: 0, 2: 0, ..., 10: 0}
   inputStatusDistribution: Record<Exclude<InputStatus, "unknown">, number>; // e.g., {valid: 0, missplaced: 0, useless: 0}
 };
+
+export function meta({}: Route.MetaArgs) {
+  return [
+    { title: "Astro Numbers" },
+    { name: "description", content: "Find the daily secret 5-digit number within 10 attempts" },
+  ];
+}
 
 const NUMBER_LENGTH = 5; // Adjusted to match the length of the answer
 const TRY_LIMIT = 10;
