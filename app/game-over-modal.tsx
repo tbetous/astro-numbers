@@ -17,13 +17,14 @@ export const GameOverModal = ({
   tryLimit,
   historyInputStatus,
   show,
+  onClose,
 }: GameOverModalProps) => {
   const title = won ? "Success" : "Defeat"
   const closing = won
     ? "Congratulations! Come back tomorrow for a new puzzle."
     : "Better luck next time! Maybe you will find it tomorrow?"
   return (
-    <Modal title={title} show={show}>
+    <Modal title={title} show={show} onClose={onClose}>
       <div className="flex flex-col items-left gap-4">
         <p>
           The answer was :{" "}

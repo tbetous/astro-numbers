@@ -105,6 +105,7 @@ export default function App() {
     (historyStatus.length && historyStatus[historyStatus.length - 1]) ||
       Array(NUMBER_LENGTH).fill("unknown")
   )
+  const [gameOverShown, setGameOverShown] = useState(false)
 
   const hasWon = inputStatus.every((status) => status === "valid")
   const hasNoTryLeft = tryLeft <= 0
@@ -229,9 +230,12 @@ export default function App() {
       <GameOverModal
         won={hasWon}
         historyInputStatus={historyStatus}
-        show={isGameOver}
+        show={isGameOver && !gameOverShown}
         answer={answer}
         tryLimit={TRY_LIMIT}
+        onClose={() => {
+          setGameOverShown(true)
+        }}
       />
       <StatsModal
         show={displayStats}
