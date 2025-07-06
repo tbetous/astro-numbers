@@ -95,9 +95,7 @@ export default function App() {
     isNewDay ? [] : gameState.history
   )
 
-  const [displayOnboarding, setDisplayOnboarding] = useState(
-    configuration && configuration.onboarding
-  )
+  const [displayOnboarding, setDisplayOnboarding] = useState(false)
   const [displayStats, setDisplayStats] = useState(false)
   const [tryLeft, setTryLeft] = useState(TRY_LIMIT - historyStatus.length)
   const [input, setInput] = useState<number[]>([])
@@ -138,6 +136,10 @@ export default function App() {
 
       return updatedStats
     })
+  }
+
+  if (configuration && configuration.onboarding && !displayOnboarding) {
+    setDisplayOnboarding(true)
   }
 
   if (isGameOver && today !== gameStats.lastPlayedDate) {
