@@ -11,7 +11,11 @@ import type { Route } from "./+types/root"
 import "./app.css"
 
 export const links: Route.LinksFunction = () => [
-  { rel: "icon", href: "/astro-numbers/favicon.ico", type: "image/x-icon" },
+  {
+    rel: "icon",
+    href: import.meta.env.PROD ? "/astro-numbers/favicon.ico" : "/favicon.ico",
+    type: "image/x-icon",
+  },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",

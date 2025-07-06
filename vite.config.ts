@@ -4,6 +4,6 @@ import { defineConfig } from "vite"
 import tsconfigPaths from "vite-tsconfig-paths"
 
 export default defineConfig({
-  base: "/astro-numbers/",
+  base: process.env.NODE_ENV === "production" ? "/astro-numbers/" : "/",
   plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
 })
