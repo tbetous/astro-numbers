@@ -2,6 +2,7 @@
   "name": "astro-numbers",
   "private": true,
   "type": "module",
+  "homepage": "https://tbetous.github.io/astro-numbers",
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
@@ -10,7 +11,8 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@react-router/node": "^7.4.0",
@@ -32,6 +34,7 @@
     "eslint": "^9.30.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "gh-pages": "^6.3.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "^3.6.2",
