@@ -2,6 +2,10 @@
 
 A fun daily number guessing game! 🎯 Challenge yourself to find the secret 5-digit number within 10 attempts.
 
+<div align="center">
+  <img src="screenshots/screenshot.png" alt="Game Screenshot" height="400">
+</div>
+
 ## 🎮 How to Play
 
 Guess the daily secret number and get instant color-coded feedback:
