@@ -8,7 +8,7 @@ import globals from "globals"
 export default [
   js.configs.recommended,
   {
-    ignores: [".react-router/**", "node_modules/**"],
+    ignores: [".react-router/**", "node_modules/**", "build/**"],
   },
   {
     files: ["**/*.{js,jsx,ts,tsx}"],
