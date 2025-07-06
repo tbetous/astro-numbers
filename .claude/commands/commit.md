@@ -74,14 +74,14 @@ Good commit messages:
 
 Example of splitting commits:
 
-- First commit: feat: add new solc version type definitions
-- Second commit: docs: update documentation for new solc versions
+- First commit: feat: add new type definitions
+- Second commit: docs: update documentation
 - Third commit: chore: update package.json dependencies
 - Fourth commit: feat: add type definitions for new API endpoints
 - Fifth commit: feat: improve concurrency handling in worker threads
 - Sixth commit: fix: resolve linting issues in new code
-- Seventh commit: test: add unit tests for new solc version features
-- Eighth commit: fix: update dependencies with security vulnerabilities)
+- Seventh commit: test: add unit tests
+- Eighth commit: fix: update dependencies with security vulnerabilities
 
 ## Important Notes
 
