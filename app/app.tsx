@@ -196,14 +196,26 @@ export default function App() {
       {}
     )
 
-    const newOutputStatus: InputStatus[] = input.map((number, index) => {
-      if (!answerNumberCountMap[number]) return "useless"
+    const newOutputStatus: InputStatus[] = Array(NUMBER_LENGTH).fill("useless")
 
-      answerNumberCountMap[number] -= 1
+    // First pass: mark exact matches (correct position) as valid
+    for (let i = 0; i < NUMBER_LENGTH; i++) {
+      if (answer[i] === input[i]) {
+        newOutputStatus[i] = "valid"
+        answerNumberCountMap[input[i]] -= 1
+      }
+    }
 
-      if (answer[index] === number) return "valid"
-      return "missplaced"
-    })
+    // Second pass: check remaining digits for misplaced matches
+    for (let i = 0; i < NUMBER_LENGTH; i++) {
+      if (
+        newOutputStatus[i] === "useless" &&
+        answerNumberCountMap[input[i]] > 0
+      ) {
+        newOutputStatus[i] = "missplaced"
+        answerNumberCountMap[input[i]] -= 1
+      }
+    }
 
     setInput([])
     setInputStatus(newOutputStatus)
